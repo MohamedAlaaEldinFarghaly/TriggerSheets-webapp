@@ -1,0 +1,151 @@
+﻿@model List<TriggerSheets.Models.Answers_tbl>
+
+@{
+    if (Model[0].TableType=="Safety")
+    {
+        ViewBag.Title = "Safety Trigger Sheet";
+    }
+    
+}
+<br />
+<p>
+    @Html.ActionLink("Operator Home", "Index", "Operator", new { TID = ViewBag.id }, null)
+</p>
+
+<h2>Trigger Info</h2>
+<table class="table">
+    <tr>
+        <th>
+            Shift
+        </th>
+        <th>
+            line
+        </th>
+
+        <th>
+            Day
+        </th>
+    </tr>
+    <tr>
+        <td>
+            @ViewBag.shift
+        </td>
+        <td>
+            @ViewBag.line
+        </td>
+
+        <td>
+            @ViewBag.day.ToShortDateString()
+        </td>
+    </tr>
+</table>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>@ViewBag.Title Answers</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+
+        @for (var i = 0; i < @ViewBag.count; i++)
+        {
+
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <label>Quality question # @(i + 1)</label>
+                    <label>@ViewBag.Sq[i]</label>
+                    @Html.HiddenFor(model => model[i].q_ID)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model[i].states,"Answer", new { @class = "control-label col-md-2" })
+
+                @if (@ViewBag.AnsType[i])
+                {
+                    <div class="col-md-10">
+                        @Html.RadioButtonFor(model => model[i].states, !Model[i].states, new { @id = "option1" + i }) <label style="color:red">Yes</label>
+                        @Html.RadioButtonFor(model => model[i].states, Model[i].states, new { @id = "option2" + i }) No
+
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-10">
+                        @Html.RadioButtonFor(model => model[i].states, Model[i].states, new { @id = "option2" + i }) Yes
+                        @Html.RadioButtonFor(model => model[i].states, !Model[i].states, new { @id = "option1" + i }) <label style="color:red">No</label>
+
+                    </div>
+                }
+                @Html.ValidationMessageFor(model => model[i].states)
+
+
+            </div>
+            string ids = "action" + i;
+            <div class="form-group" id=@ids style="display:none;">
+                @Html.LabelFor(model => model[i].action, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model[i].action)
+                    @Html.ValidationMessageFor(model => model[i].action)
+
+                </div>
+            </div>
+
+            
+
+<script type="text/javascript">
+                $(document).ready(function () {
+                    $('#option2' + '@i').change(function () {
+                        if ($(this).is(':checked')) {
+                            $('#action' + '@i').hide();
+
+
+                        }
+                    });
+                });
+            </script>
+
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#option1' + '@i').change(function () {
+                        if ($(this).is(':checked')) {
+                            $('#action' + '@i').show("slow");
+                            $("p").hide();
+
+                        }
+                    });
+
+                });
+            </script>
+
+
+
+            @Html.HiddenFor(model => model[i].triggerID)
+        }
+
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index", "SafetyAns", new { T_ID =ViewBag.id},null)
+</div>*@
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

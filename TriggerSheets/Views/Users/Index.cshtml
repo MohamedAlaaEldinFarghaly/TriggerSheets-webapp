@@ -1,0 +1,77 @@
+﻿@model IEnumerable<TriggerSheets.Models.User_Line>
+
+@{
+    ViewBag.Title = "Admin";
+}
+<div style=" font-family:Arial">
+    <h2>Admin</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <p>
+        @using (Html.BeginForm("Index", "Users", FormMethod.Get))
+        {
+            <b>Search By: </b>@Html.RadioButton("searchBy", "User_num") <text>User Name</text>
+            @Html.RadioButton("searchBy", "Name", true) <text>Name</text>
+            @Html.RadioButton("searchBy", "Line") <text>Line</text><br />
+
+            @Html.TextBox("search")<input type="submit" value="Search" />
+
+        }
+    </p>
+
+    <p>
+        @Html.ActionLink("Delete all", "DeleteAll", new { onclick = "return confirm('Are you sure you wish to delete All actions');" })
+
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Line)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th></th>
+        </tr>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td>No rows match search criteria </td>
+            </tr>
+        }
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User_num)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Line)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+@Html.ActionLink("Import From Excel", "FromExcel")

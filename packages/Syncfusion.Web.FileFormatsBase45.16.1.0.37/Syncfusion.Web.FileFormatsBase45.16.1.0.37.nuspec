@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Syncfusion.Web.FileFormatsBase45</id>
+    <version>16.1.0.37</version>
+    <authors>Syncfusion Inc.</authors>
+    <owners>Syncfusion Inc.</owners>
+    <licenseUrl>http://www.syncfusion.com/nuget/license</licenseUrl>
+    <projectUrl>http://www.syncfusion.com/</projectUrl>
+    <iconUrl>http://www.syncfusion.com/content/images/nuget/sync_logo_icon.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Nuget package contains Syncfusion.Web.FileFormatsBase assemblies.</description>
+    <copyright>Copyright 2001 - 2018 Syncfusion Inc.</copyright>
+  </metadata>
+</package>

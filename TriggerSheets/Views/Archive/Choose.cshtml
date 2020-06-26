@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Choose Period";
+}
+
+<h2>Choose</h2>
+
+@*"Index", "Archive", new { @id="Formdate" }*@
+@using (Html.BeginForm())
+{
+    
+    <div class="form-horizontal">
+        <div class="form-group">
+            <p>From :</p>
+            <div class="col-md-10">
+                <input type="date" class='date-picker' name="Start" required />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p>To :</p>
+            <div class="col-md-10">
+                <input type="date"  class='date-picker' name="End" value=@DateTime.Now.Date.ToString() required />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-1">
+                <input type="submit" name="command" value="Shifts" class="btn btn-default" >
+            </div>
+        
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" name="command" value="Late" class="btn btn-default">
+            </div>
+        </div>
+    </div>
+    @*var st = Convert.ToDateTime(Request.Form["start"]);
+    var en = Convert.ToDateTime(Request.Form["start"]);
+    <br />
+    @Html.ActionLink("Late submissions","Notify", "Archive", new { start = @st , end =@en })*@
+}
+

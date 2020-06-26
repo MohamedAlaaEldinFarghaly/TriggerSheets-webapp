@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="044b82558d934090a5ac9ec001e00d1a" Name="Diagram1">
+        <EntityTypeShape EntityType="QSModel1.Answers_tbl" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QSModel1.Questions_tbl" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QSModel1.sysdiagram" PointX="5.125" PointY="5.375" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QSModel1.Triggers_tbl" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="QSModel1.FK__Answers_tb__q_ID__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="QSModel1.FK_Answers_tbl_Triggers_tbl" />
+        <AssociationConnector Association="QSModel1.FK_Answers_tbl_Triggers_tbl1" />
+        <EntityTypeShape EntityType="QSModel1.User_Line" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="QSModel1.Summary_tbl" Width="1.5" PointX="3" PointY="8.125" />
+        <AssociationConnector Association="QSModel1.FK_Summary_Triggers_tbl" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

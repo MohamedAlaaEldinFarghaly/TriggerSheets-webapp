@@ -1,0 +1,75 @@
+﻿@model List<TriggerSheets.Models.Answers_tbl>
+
+@{
+    ViewBag.Title = "View1";
+}
+
+<h2>View1</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            states)
+        </th>
+        <th>
+            action)
+        </th>
+        <th>
+            done)
+        </th>
+        <th>
+            TableType)
+        </th>
+        <th>
+            DoneDate)
+        </th>
+        <th>
+            question)
+        </th>
+        <th>
+            .shift)
+        </th>
+        <th>
+            Done.shift)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.states)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.action)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.done)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TableType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DoneDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Questions_tbl.question)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Triggers_tbl.shift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Triggers_tbl1.shift)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.A_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.A_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.A_ID })
+        </td>
+    </tr>
+}
+
+</table>

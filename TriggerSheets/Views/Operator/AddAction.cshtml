@@ -1,0 +1,90 @@
+﻿@model TriggerSheets.Models.Answers_tbl
+
+@{
+    ViewBag.Title = "AddAction";
+}
+
+<h2>View1</h2>
+
+
+@using (Html.BeginForm("AddAction","Operator",FormMethod.Post,
+        new { enctype = "multipart/form-data" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Answers_tbl</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.q_ID, "question", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("q_ID", String.Empty)
+                @Html.ValidationMessageFor(model => model.q_ID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.states, new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.states)
+                @Html.ValidationMessageFor(model => model.states)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.action, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.action)
+                @Html.ValidationMessageFor(model => model.action)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.done, new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.done)
+                @Html.ValidationMessageFor(model => model.done)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.triggerID, "triggerID", new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.triggerID)
+                @Html.ValidationMessageFor(model => model.triggerID)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.TableType, new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.TableType)
+                @Html.ValidationMessageFor(model => model.TableType)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.DoneDate, new { @class = "control-label col-md-2" })*@
+            <div class="col-md-10">
+                @Html.HiddenFor(model => model.DoneDate)
+                @Html.ValidationMessageFor(model => model.DoneDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Operator Home", "Index", new { TID = Model.triggerID })
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

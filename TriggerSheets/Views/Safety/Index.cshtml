@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TriggerSheets.Models.Questions_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Safety Trigger Sheet</h2>
+<br />
+
+<p>
+    @Html.ActionLink("Create New", "Create") <br />
+    @Html.ActionLink("Database Details", "Details")
+</p>
+<table class="table">
+
+    <tr>
+
+        <th style="float: left; width: 10px;">
+            @Html.DisplayNameFor(model => model.question)
+        </th>
+
+        <th style="float: right; width: 730px;">
+            @Html.DisplayNameFor(model => model.Available)
+        </th>
+
+        <th style="float: right; width: 100px;">
+            @Html.DisplayNameFor(model => model.AnsType)
+        </th>
+
+    </tr>
+
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="float: left; width: 300px;">
+                @Html.DisplayFor(modelItem => item.question)
+            </td>
+            <td style="float: left; width: 100px;">
+                @Html.DisplayFor(modelItem => item.AnsType)
+            </td>
+            <td style="float: left; width: 100px;">
+                @Html.DisplayFor(modelItem => item.Available)
+            </td>
+            <td style="float: left; width: 600px;">
+                @Html.ActionLink("Edit", "Edit", new { id = item.Q_ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Q_ID })
+            </td>
+        </tr>
+    }
+</table>
+@Html.ActionLink("Quality Questions", "Index", "Quality")

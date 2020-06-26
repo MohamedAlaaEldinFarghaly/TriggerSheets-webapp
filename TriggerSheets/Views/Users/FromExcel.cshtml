@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "FromExcel";
+}
+
+<h2>FromExcel</h2>
+
+@using (Html.BeginForm("FromExcel", "Users", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="col-md-offset-2 col-md-10">
+        <input type="file" name="file" />
+    </div>
+    
+    <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="OK" class="btn btn-default" />
+    </div>
+    <p>@ViewBag.Message</p>
+}

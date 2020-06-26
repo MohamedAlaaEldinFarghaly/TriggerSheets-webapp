@@ -1,0 +1,623 @@
+﻿@model IEnumerable<TriggerSheets.Models.Answers_tbl>
+
+
+
+@{
+    int c = 1;
+    Dictionary<int, List<string>> Actions = new Dictionary<int, List<string>>();
+}
+@using (@Html.BeginForm())
+{
+    <h3>Choose Date</h3>
+    <p>
+        <input type="date" name="viewdate" value=@DateTime.Now.Date.ToString()   />
+        
+    </p>
+    <input type="submit" value="OK" class="btn btn-default" id="btnValidateDate" />
+}
+
+
+
+
+
+@for (int i = 1; i < 11; i++)
+{
+
+    var Viewdate = Convert.ToDateTime(Request.Form["viewdate"]);
+    List<string> Add_Before_Date = new List<string>();
+    List<string> Done_Before_Date = new List<string>();
+    List<string> Add_in_A = new List<string>();
+    List<string> Add_in_B = new List<string>();
+    List<string> Add_in_C = new List<string>();
+    List<string> Done_in_A = new List<string>();
+    List<string> Done_in_B = new List<string>();
+    List<string> Done_in_C = new List<string>();
+    List<string> Add_Before_Date_Q = new List<string>();
+    List<string> Done_Before_Date_Q = new List<string>();
+    List<string> Add_in_A_Q = new List<string>();
+    List<string> Add_in_B_Q = new List<string>();
+    List<string> Add_in_C_Q = new List<string>();
+    List<string> Done_in_A_Q = new List<string>();
+    List<string> Done_in_B_Q = new List<string>();
+    List<string> Done_in_C_Q = new List<string>();
+
+    foreach (var item in Model)
+    {
+       
+            if (item.Triggers_tbl.line == i && item.Triggers_tbl.daydate < Viewdate && item.states == true)
+            {
+                Add_Before_Date.Add(item.action);
+            }
+            if (item.DoneTrigger != null)
+            {
+                if (item.Triggers_tbl1.line == i && item.Triggers_tbl1.daydate < Viewdate && item.states == true)
+                {
+                    Done_Before_Date.Add(item.action);
+                }
+            }
+            if (item.Triggers_tbl.line == i && item.Triggers_tbl.shift == "A" && item.Triggers_tbl.daydate == Viewdate && item.TableType == "Safety")
+            {
+                Add_in_A.Add(item.action);
+            }
+            if (item.Triggers_tbl.line == i && item.Triggers_tbl.shift == "B" && item.Triggers_tbl.daydate == Viewdate && item.TableType == "Safety")
+            {
+                Add_in_B.Add(item.action);
+            }
+            if (item.Triggers_tbl.line == i && item.Triggers_tbl.shift == "C" && item.Triggers_tbl.daydate == Viewdate && item.TableType == "Safety")
+            {
+                Add_in_C.Add(item.action);
+            }
+            if (item.DoneTrigger != null)
+            {
+                if (item.Triggers_tbl1.line == i && item.Triggers_tbl1.shift == "A" && item.Triggers_tbl.daydate == Viewdate && item.TableType == "Safety")
+                {
+                    Done_in_A.Add(item.action);
+                }
+
+                if (item.Triggers_tbl1.line == i && item.Triggers_tbl1.shift == "B" && item.Triggers_tbl.daydate == Viewdate && item.TableType == "Safety")
+                {
+                    Done_in_B.Add(item.action);
+                }
+                if (item.Triggers_tbl1.line == i && item.Triggers_tbl1.shift == "C" && item.Triggers_tbl.daydate == Viewdate && item.TableType == "Safety")
+                {
+                    Done_in_C.Add(item.action);
+                }
+            }
+            if (item.Triggers_tbl.line == i && item.Triggers_tbl.daydate < Viewdate && item.TableType == "Quality" && item.states == true)
+            {
+                Add_Before_Date_Q.Add(item.action);
+            }
+            if (item.DoneTrigger != null)
+            {
+                if (item.Triggers_tbl1.line == i && item.Triggers_tbl1.daydate < Viewdate && item.TableType == "Quality" && item.states == true)
+                {
+                    Done_Before_Date_Q.Add(item.action);
+                }
+            }
+            if (item.Triggers_tbl.line == i && item.Triggers_tbl.shift == "A" && item.Triggers_tbl.daydate == Viewdate && item.TableType == "Quality")
+            {
+                Add_in_A_Q.Add(item.action);
+            }
+            if (item.Triggers_tbl.line == i && item.Triggers_tbl.shift == "B" && item.Triggers_tbl.daydate == Viewdate && item.TableType == "Quality")
+            {
+                Add_in_B_Q.Add(item.action);
+            }
+            if (item.Triggers_tbl.line == i && item.Triggers_tbl.shift == "C" && item.Triggers_tbl.daydate == Viewdate && item.TableType == "Quality")
+            {
+                Add_in_C_Q.Add(item.action);
+            }
+            if (item.DoneTrigger != null)
+            {
+                if (item.Triggers_tbl1.line == i && item.Triggers_tbl1.shift == "A" && item.Triggers_tbl1.daydate == Viewdate && item.TableType == "Quality")
+                {
+                    Done_in_A_Q.Add(item.action);
+                }
+                if (item.Triggers_tbl1.line == i && item.Triggers_tbl1.shift == "B" && item.Triggers_tbl1.daydate == Viewdate && item.TableType == "Quality")
+                {
+                    Done_in_B_Q.Add(item.action);
+                }
+                if (item.Triggers_tbl1.line == i && item.Triggers_tbl1.shift == "C" && item.Triggers_tbl1.daydate == Viewdate && item.TableType == "Quality")
+                {
+                    Done_in_C_Q.Add(item.action);
+                }
+            }
+    }
+
+    //before|after in shift A Safety
+    List<string> A_before = Add_Before_Date.Except(Done_Before_Date).ToList();
+    List<string> A_after = new List<string>(A_before);
+    A_after.AddRange(Add_in_A);
+    A_after = A_after.Except(Done_in_A).ToList();
+    //before|after in shift B Safety
+    List<string> B_before = new List<string>(A_after);
+    List<string> B_after = new List<string>(B_before);
+    B_after.AddRange(Add_in_B);
+    B_after = B_after.Except(Done_in_B).ToList();
+    //before|after in shift C Safety
+    List<string> C_before = new List<string>(B_after);
+    List<string> C_after = new List<string>(C_before);
+    C_after.AddRange(Add_in_C);
+    C_after = C_after.Except(Done_in_C).ToList();
+
+    //before|after in shift A Quality
+    List<string> A_before_Q = Add_Before_Date_Q.Except(Done_Before_Date_Q).ToList();
+    List<string> A_after_Q = new List<string>(A_before_Q);
+    A_after_Q.AddRange(Add_in_A_Q);
+    A_after_Q = A_after_Q.Except(Done_in_A_Q).ToList();
+    //before|after in shift B Quality
+    List<string> B_before_Q = new List<string>(A_after_Q);
+    List<string> B_after_Q = new List<string>(B_before_Q);
+    B_after_Q.AddRange(Add_in_B_Q);
+    B_after_Q = B_after_Q.Except(Done_in_B_Q).ToList();
+    //before|after in shift C Quality
+    List<string> C_before_Q = new List<string>(B_after_Q);
+    List<string> C_after_Q = new List<string>(C_before_Q);
+    C_after_Q.AddRange(Add_in_C_Q);
+    C_after_Q = C_after_Q.Except(Done_in_C_Q).ToList();
+
+
+    //saving lists of actions of line in dictionary
+    //safety
+    Actions.Add(c, A_before);
+    Actions.Add(c + 1, A_after);
+    Actions.Add(c + 2, B_before);
+    Actions.Add(c + 3, B_after);
+    Actions.Add(c + 4, C_before);
+    Actions.Add(c + 5, C_after);
+    //quality
+    Actions.Add(c + 6, A_before_Q);
+    Actions.Add(c + 7, A_after_Q);
+    Actions.Add(c + 8, B_before_Q);
+    Actions.Add(c + 9, B_after_Q);
+    Actions.Add(c + 10, C_before_Q);
+    Actions.Add(c + 11, C_after_Q);
+
+
+
+   
+<script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btn" + "@i" + "1").click(function () {
+                $("#A_b" + "@i").show();
+                $("#A_a" + "@i").hide();
+                $("#B_b" + "@i").hide();
+                $("#B_a" + "@i").hide();
+                $("#C_b" + "@i").hide();
+                $("#C_a" + "@i").hide();
+
+            });
+            $("#btn" + "@i" + "2").click(function () {
+                $("#A_a" + "@i").show();
+                $("#A_b" + "@i").hide();
+                $("#B_b" + "@i").hide();
+                $("#B_a" + "@i").hide();
+                $("#C_b" + "@i").hide();
+                $("#C_a" + "@i").hide();
+            });
+            $("#btn" + "@i" + "3").click(function () {
+                $("#B_b" + "@i").show();
+                $("#A_b" + "@i").hide();
+                $("#A_a" + "@i").hide();
+                $("#B_a" + "@i").hide();
+                $("#C_b" + "@i").hide();
+                $("#C_a" + "@i").hide();
+            });
+            $("#btn" + "@i" + "4").click(function () {
+                $("#B_a" + "@i").show();
+                $("#A_b" + "@i").hide();
+                $("#A_a" + "@i").hide();
+                $("#B_b" + "@i").hide();
+                $("#C_b" + "@i").hide();
+                $("#C_a" + "@i").hide();
+            });
+            $("#btn" + "@i" + "5").click(function () {
+                $("#C_b" + "@i").show();
+                $("#A_b" + "@i").hide();
+                $("#A_a" + "@i").hide();
+                $("#B_a" + "@i").hide();
+                $("#B_b" + "@i").hide();
+                $("#C_a" + "@i").hide();
+            });
+            $("#btn" + "@i" + "6").click(function () {
+                $("#C_a" + "@i").show();
+                $("#A_b" + "@i").hide();
+                $("#A_a" + "@i").hide();
+                $("#B_a" + "@i").hide();
+                $("#B_b" + "@i").hide();
+                $("#C_b" + "@i").hide();
+            });
+            $("#btn" + "@i" + "7").click(function () {
+                $("#A_b_q" + "@i").show();
+                $("#C_b_q" + "@i").hide();
+                $("#A_a_q" + "@i").hide();
+                $("#B_a_q" + "@i").hide();
+                $("#B_b_q" + "@i").hide();
+                $("#C_a_q" + "@i").hide();
+            });
+            $("#btn" + "@i" + "8").click(function () {
+                $("#A_a_q" + "@i").show();
+                $("#C_b_q" + "@i").hide();
+                $("#A_b_q" + "@i").hide();
+                $("#B_a_q" + "@i").hide();
+                $("#B_b_q" + "@i").hide();
+                $("#C_a_q" + "@i").hide();
+            });
+            $("#btn" + "@i" + "9").click(function () {
+                $("#B_b_q" + "@i").show();
+                $("#C_b_q" + "@i").hide();
+                $("#A_a_q" + "@i").hide();
+                $("#B_a_q" + "@i").hide();
+                $("#A_b_q" + "@i").hide();
+                $("#C_a_q" + "@i").hide();
+            });
+            $("#btn" + "@i" + "10").click(function () {
+                $("#B_a_q" + "@i").show();
+                $("#C_b_q" + "@i").hide();
+                $("#A_a_q" + "@i").hide();
+                $("#B_b_q" + "@i").hide();
+                $("#A_b_q" + "@i").hide();
+                $("#C_a_q" + "@i").hide();
+            });
+            $("#btn" + "@i" + "11").click(function () {
+                $("#C_b_q" + "@i").show();
+                $("#B_b_q" + "@i").hide();
+                $("#A_a_q" + "@i").hide();
+                $("#B_a_q" + "@i").hide();
+                $("#A_b_q" + "@i").hide();
+                $("#C_a_q" + "@i").hide();
+            });
+            $("#btn" + "@i" + "12").click(function () {
+                $("#C_a_q" + "@i").show();
+                $("#B_b_q" + "@i").hide();
+                $("#A_a_q" + "@i").hide();
+                $("#B_a_q" + "@i").hide();
+                $("#A_b_q" + "@i").hide();
+                $("#C_b_q" + "@i").hide();
+            });
+        });
+
+
+    </script>
+
+
+    if (Viewdate != default(DateTime))
+    {
+        <h3>Line @Html.DisplayFor(m => i)</h3>
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <h2>Safety</h2>
+                <br />
+                <table class="table" border="1">
+                    <tr>
+
+                        <th>Shift</th>
+                        <th>Before</th>
+                        <th>After</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">A</td>
+                        @if (A_before.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td> }
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+1)" style="background-color:red;">HIGH</button></td> }
+                        @if (A_after.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td>}
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+2)" style="background-color:red;">HIGH</button></td> }
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">B</td>
+                        @if (B_before.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td> }
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+3)" style="background-color:red;">HIGH</button></td> }
+                        @if (B_after.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td>}
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+4)" style="background-color:red;">HIGH</button></td> }
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">C</td>
+                        @if (C_before.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td> }
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+5)" style="background-color:red;">HIGH</button></td> }
+                        @if (C_after.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td>}
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+6)" style="background-color:red;">HIGH</button></td> }
+                    </tr>
+
+                </table>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
+                <h2>Quality</h2>
+                <br />
+                <table class="table" border="1">
+                    <tr>
+
+                        <th>Shift</th>
+                        <th>Before</th>
+                        <th>After</th>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">A</td>
+                        @if (A_before_Q.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td> }
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+7)" style="background-color:red;">HIGH</button></td> }
+                        @if (A_after_Q.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td>}
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+8)" style="background-color:red;">HIGH</button></td> }
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">B</td>
+                        @if (B_before_Q.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td> }
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+9)" style="background-color:red;">HIGH</button></td> }
+                        @if (B_after_Q.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td>}
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+10)" style="background-color:red;">HIGH</button></td> }
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">C</td>
+                        @if (C_before_Q.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td> }
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+11)" style="background-color:red;">HIGH</button></td> }
+                        @if (C_after_Q.Count() == 0)
+                        {
+                            <td style="background-color:green; text-align:center; text-decoration-style:solid;">LOW</td>}
+                        else
+                        {
+                            <td style="background-color:red; text-align:center; text-decoration-style:solid;"><button id="@("btn"+i+12)" style="background-color:red;">HIGH</button></td> }
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-4">
+            <div id="@("A_b"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+            <div id="@("A_a"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 1)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+            <div id="@("B_b"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 2)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+            <div id="@("B_a"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 3)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+            <div id="@("C_b"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 4)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+            <div id="@("C_a"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 5)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div id="@("A_b_q"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 6)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+            <div id="@("A_a_q"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 7)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+            <div id="@("B_b_q"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 8)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+            <div id="@("B_a_q"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 9)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+            <div id="@("C_b_q"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 10)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+            <div id="@("C_a_q"+i)" style="display: none; border: 2px solid black">
+
+                <h4>Actions</h4>
+                <ol>
+                    @foreach (var item in Actions)
+                    {
+                        if (item.Key == c + 11)
+                        {
+                            foreach (string str in item.Value)
+                            {
+                                <li>   @Html.DisplayFor(m => str) </li>
+                            }
+                        }
+                    }
+
+                </ol>
+            </div>
+        </div>
+    </div>
+                    c = c + 12;
+}

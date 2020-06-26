@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Syncfusion.AspNet.Mvc5.FileFormatsHelper</id>
+    <version>16.1.0.37</version>
+    <authors>Syncfusion Inc.</authors>
+    <owners>Syncfusion Inc.</owners>
+    <licenseUrl>http://www.syncfusion.com/nuget/license</licenseUrl>
+    <projectUrl>http://www.syncfusion.com/</projectUrl>
+    <iconUrl>http://www.syncfusion.com/content/images/nuget/sync_logo_icon.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>Nuget package contains Syncfusion.AspNet.Mvc.FileFormatsHelper assemblies</description>
+    <copyright>Copyright 2001 - 2018 Syncfusion Inc.</copyright>
+    <dependencies>
+      <dependency id="Syncfusion.AspNet.Mvc5.FileFormats" version="16.1.0.37" />
+    </dependencies>
+  </metadata>
+</package>

@@ -1,0 +1,108 @@
+﻿@model IEnumerable<TriggerSheets.Models.Answers_tbl>
+
+
+<br />
+<p>
+    @Html.ActionLink("Operator Home", "Index", "Operator", new { TID = ViewBag.id},null)
+</p>
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Triggers_tbl.shift)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Triggers_tbl.line)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Triggers_tbl.daydate)
+        </th>
+    </tr>
+    <tr>
+        <td>
+            @ViewBag.shift
+        </td>
+        <td>
+            @ViewBag.line
+        </td>
+
+        <td>
+            @ViewBag.day.ToShortDateString()
+        </td>
+    </tr>
+</table>
+<p>
+    @Html.ActionLink("Insert New", "Create", new { T_iD = ViewBag.id })
+</p>
+<p>
+    @Html.ActionLink("Delete all", "DeleteAll", new { triggerId = ViewBag.id }, new { onclick = "return confirm('Are you sure you wish to delete All actions');" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Answer
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.action)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Questions_tbl.question)
+        </th>
+        <th>
+            Status(Done)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.states)
+                @if (item.states)
+                {
+                    if (item.Questions_tbl.AnsType)
+                    {
+                        <label style="color:red">Yes</label>
+                    }
+                    else
+                    {
+                        <label>No</label>
+                    }
+                }
+                else
+                {
+                    if (!item.Questions_tbl.AnsType)
+                    {
+                        <label style="color:red">Yes</label>
+                    }
+                    else
+                    {
+                        <label>No</label>
+                    }
+                    
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.action)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Questions_tbl.question)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.done)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.A_ID }) |
+                @*@Html.ActionLink("Details", "Details", new { id = item.SAnsId }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.A_ID }, new { onclick = "return confirm('Are you sure you wish to delete this action');" })
+            </td>
+        </tr>
+    }
+
+</table>

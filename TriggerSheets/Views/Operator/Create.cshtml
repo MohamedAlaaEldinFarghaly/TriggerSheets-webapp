@@ -1,0 +1,60 @@
+﻿@model TriggerSheets.Models.Triggers_tbl
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Operator info</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+        <h4>Triggers_tbl</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <dl class="dl-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.line, new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.line, new { @class = "control-label col-md-2" })
+            @Html.HiddenFor(model => model.line)
+            @Html.ValidationMessageFor(model => model.line)
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.shift, new { @class = "control-label col-md-2" })
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.shift)
+            @Html.HiddenFor(model => model.shift)
+            @Html.ValidationMessageFor(model => model.shift)
+        </dd>
+
+
+        <dt>
+            @Html.LabelFor(model => model.daydate,"date" , new { @class = "control-label col-md-2" })
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.daydate)
+            @Html.HiddenFor(model => model.daydate)
+            @Html.ValidationMessageFor(model => model.daydate)
+        </dd>
+    </dl>
+            @Html.HiddenFor(model => model.usernum)
+
+
+
+ 
+            <input type="submit" value="Proceed" class="btn btn-default" />
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

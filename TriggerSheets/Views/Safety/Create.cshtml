@@ -1,0 +1,98 @@
+﻿@model List<TriggerSheets.Models.Questions_tbl>
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create Safety Trigger Sheet</h2>
+
+@{int i = 0;}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        <table class="table" id="TB">
+            <tr id="Q_div">
+                <td>
+                    @Html.LabelFor(model => model[i].question, new { @class = "control-label col-md-2" })
+                </td>
+                <td>
+                    @Html.LabelFor(model => model[i].AnsType, new { @class = "control-label col-md-2" })
+                </td>
+                <td>
+                    @Html.LabelFor(model => model[i].Available, new { @class = "control-label col-md-2" })
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.TextBoxFor(model => model[i].question, new { style = "width:400px" })
+                    @Html.ValidationMessageFor(model => model[i].question)
+                </td>
+                <td>
+                    @Html.EditorFor(model => model[i].AnsType)
+                    @Html.ValidationMessageFor(model => model[i].AnsType)
+
+                </td>
+                <td>
+                    @Html.EditorFor(model => model[i].Available)
+                    @Html.ValidationMessageFor(model => model[i].Available)
+
+                </td>
+            </tr>
+
+        </table>
+
+        <div style="clear:both">
+            <br />
+        </div>
+        <div style="clear:both">
+            <form>
+                <input type="button" value="Add" onclick='AddQuestion()'>
+                &nbsp; &nbsp; &nbsp; &nbsp;
+                <input type="button" value="Remove" onclick='RemoveQuestion()'>
+            </form>
+        </div>
+        <div style="clear:both">
+            <br />
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+}
+<div style="clear:both">
+    <br />
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    function AddQuestion() {
+        @{i = i + 1;}
+        $('#TB > tbody:last-child').append('<tr id="@i"> <td> @Html.TextBoxFor(model => model[i].question, new { style = "width:400px" }) </td> <td> @Html.EditorFor(model => model[i].AnsType )  </td> <td> @Html.EditorFor(model => model[i].Available ) </td> </tr>');
+    }
+    function RemoveQuestion() {
+
+        $("#@i").remove();
+
+
+        @{i = i - 1;}
+    }
+</script>
+
+
+

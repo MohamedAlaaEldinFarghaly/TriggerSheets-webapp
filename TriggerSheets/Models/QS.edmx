@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QSModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Answers_tbl">
+          <Key>
+            <PropertyRef Name="A_ID" />
+          </Key>
+          <Property Name="A_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="q_ID" Type="bigint" />
+          <Property Name="states" Type="bit" Nullable="false" />
+          <Property Name="action" Type="nvarchar(max)" />
+          <Property Name="done" Type="bit" Nullable="false" />
+          <Property Name="triggerID" Type="bigint" Nullable="false" />
+          <Property Name="TableType" Type="nvarchar(max)" />
+          <Property Name="DoneDate" Type="datetime" />
+          <Property Name="DoneTrigger" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Questions_tbl">
+          <Key>
+            <PropertyRef Name="Q_ID" />
+          </Key>
+          <Property Name="Q_ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question" Type="nvarchar(max)" />
+          <Property Name="AnsType" Type="bit" Nullable="false" />
+          <Property Name="Available" Type="bit" Nullable="false" />
+          <Property Name="TableType" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Summary_tbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TrigID" Type="bigint" Nullable="false" />
+          <Property Name="SafetyBefore" Type="bit" />
+          <Property Name="SafetyAfter" Type="bit" />
+          <Property Name="QualityBefore" Type="bit" />
+          <Property Name="QualityAfter" Type="bit" />
+          <Property Name="Inserted" Type="datetime" />
+          <Property Name="LastEdited" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Triggers_tbl">
+          <Key>
+            <PropertyRef Name="TriggerID" />
+          </Key>
+          <Property Name="TriggerID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="line" Type="int" Nullable="false" />
+          <Property Name="shift" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="daydate" Type="date" Nullable="false" />
+          <Property Name="usernum" Type="bigint" />
+        </EntityType>
+        <EntityType Name="User_Line">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_num" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="Line" Type="int" />
+          <Property Name="Type" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Answers_tb__q_ID__3B75D760">
+          <End Role="Questions_tbl" Type="Self.Questions_tbl" Multiplicity="0..1" />
+          <End Role="Answers_tbl" Type="Self.Answers_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Answers_tbl">
+              <PropertyRef Name="q_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answers_tbl_Triggers_tbl">
+          <End Role="Triggers_tbl" Type="Self.Triggers_tbl" Multiplicity="1" />
+          <End Role="Answers_tbl" Type="Self.Answers_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Triggers_tbl">
+              <PropertyRef Name="TriggerID" />
+            </Principal>
+            <Dependent Role="Answers_tbl">
+              <PropertyRef Name="triggerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answers_tbl_Triggers_tbl1">
+          <End Role="Triggers_tbl" Type="Self.Triggers_tbl" Multiplicity="0..1" />
+          <End Role="Answers_tbl" Type="Self.Answers_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Triggers_tbl">
+              <PropertyRef Name="TriggerID" />
+            </Principal>
+            <Dependent Role="Answers_tbl">
+              <PropertyRef Name="DoneTrigger" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Summary_Triggers_tbl">
+          <End Role="Triggers_tbl" Type="Self.Triggers_tbl" Multiplicity="1" />
+          <End Role="Summary_tbl" Type="Self.Summary_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Triggers_tbl">
+              <PropertyRef Name="TriggerID" />
+            </Principal>
+            <Dependent Role="Summary_tbl">
+              <PropertyRef Name="TrigID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QSModel1StoreContainer">
+          <EntitySet Name="Answers_tbl" EntityType="Self.Answers_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questions_tbl" EntityType="Self.Questions_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Summary_tbl" EntityType="Self.Summary_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Triggers_tbl" EntityType="Self.Triggers_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Line" EntityType="Self.User_Line" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Answers_tb__q_ID__3B75D760" Association="Self.FK__Answers_tb__q_ID__3B75D760">
+            <End Role="Questions_tbl" EntitySet="Questions_tbl" />
+            <End Role="Answers_tbl" EntitySet="Answers_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_tbl_Triggers_tbl" Association="Self.FK_Answers_tbl_Triggers_tbl">
+            <End Role="Triggers_tbl" EntitySet="Triggers_tbl" />
+            <End Role="Answers_tbl" EntitySet="Answers_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_tbl_Triggers_tbl1" Association="Self.FK_Answers_tbl_Triggers_tbl1">
+            <End Role="Triggers_tbl" EntitySet="Triggers_tbl" />
+            <End Role="Answers_tbl" EntitySet="Answers_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Summary_Triggers_tbl" Association="Self.FK_Summary_Triggers_tbl">
+            <End Role="Triggers_tbl" EntitySet="Triggers_tbl" />
+            <End Role="Summary_tbl" EntitySet="Summary_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QSModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Answers_tbl">
+          <Key>
+            <PropertyRef Name="A_ID" />
+          </Key>
+          <Property Name="A_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="q_ID" Type="Int64" />
+          <Property Name="states" Type="Boolean" Nullable="false" />
+          <Property Name="action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="done" Type="Boolean" Nullable="false" />
+          <Property Name="triggerID" Type="Int64" Nullable="false" />
+          <Property Name="TableType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DoneDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Questions_tbl" Relationship="Self.FK__Answers_tb__q_ID__3B75D760" FromRole="Answers_tbl" ToRole="Questions_tbl" />
+          <NavigationProperty Name="Triggers_tbl" Relationship="QSModel1.FK_Answers_tbl_Triggers_tbl" FromRole="Answers_tbl" ToRole="Triggers_tbl" />
+          <Property Name="DoneTrigger" Type="Int64" />
+          <NavigationProperty Name="Triggers_tbl1" Relationship="QSModel1.FK_Answers_tbl_Triggers_tbl1" FromRole="Answers_tbl" ToRole="Triggers_tbl" />
+        </EntityType>
+        <EntityType Name="Questions_tbl">
+          <Key>
+            <PropertyRef Name="Q_ID" />
+          </Key>
+          <Property Name="Q_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AnsType" Type="Boolean" Nullable="false" />
+          <Property Name="Available" Type="Boolean" Nullable="false" />
+          <Property Name="TableType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Answers_tbl" Relationship="Self.FK__Answers_tb__q_ID__3B75D760" FromRole="Questions_tbl" ToRole="Answers_tbl" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="principal_id" Nullable="false" Type="Int32" />
+          <Property Name="diagram_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" MaxLength="Max" FixedLength="false" Type="Binary" />
+        </EntityType>
+        <EntityType Name="Triggers_tbl">
+          <Key>
+            <PropertyRef Name="TriggerID" />
+          </Key>
+          <Property Name="TriggerID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="line" Type="Int32" Nullable="false" />
+          <Property Name="shift" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="daydate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="usernum" Type="Int64" />
+          <NavigationProperty Name="Answers_tbl" Relationship="QSModel1.FK_Answers_tbl_Triggers_tbl" FromRole="Triggers_tbl" ToRole="Answers_tbl" />
+          <NavigationProperty Name="Answers_tbl1" Relationship="QSModel1.FK_Answers_tbl_Triggers_tbl1" FromRole="Triggers_tbl" ToRole="Answers_tbl" />
+          <NavigationProperty Name="Summary_tbl" Relationship="QSModel1.FK_Summary_Triggers_tbl" FromRole="Triggers_tbl" ToRole="Summary_tbl" />
+        </EntityType>
+        <Association Name="FK__Answers_tb__q_ID__3B75D760">
+          <End Role="Questions_tbl" Type="Self.Questions_tbl" Multiplicity="0..1" />
+          <End Role="Answers_tbl" Type="Self.Answers_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions_tbl">
+              <PropertyRef Name="Q_ID" />
+            </Principal>
+            <Dependent Role="Answers_tbl">
+              <PropertyRef Name="q_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QSEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Answers_tbl" EntityType="Self.Answers_tbl" />
+          <EntitySet Name="Questions_tbl" EntityType="Self.Questions_tbl" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Triggers_tbl" EntityType="Self.Triggers_tbl" />
+          <AssociationSet Name="FK__Answers_tb__q_ID__3B75D760" Association="Self.FK__Answers_tb__q_ID__3B75D760">
+            <End Role="Questions_tbl" EntitySet="Questions_tbl" />
+            <End Role="Answers_tbl" EntitySet="Answers_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_tbl_Triggers_tbl" Association="QSModel1.FK_Answers_tbl_Triggers_tbl">
+            <End Role="Triggers_tbl" EntitySet="Triggers_tbl" />
+            <End Role="Answers_tbl" EntitySet="Answers_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answers_tbl_Triggers_tbl1" Association="QSModel1.FK_Answers_tbl_Triggers_tbl1">
+            <End Role="Triggers_tbl" EntitySet="Triggers_tbl" />
+            <End Role="Answers_tbl" EntitySet="Answers_tbl" />
+          </AssociationSet>
+          <EntitySet Name="User_Line" EntityType="QSModel1.User_Line" />
+          <EntitySet Name="Summary_tbl" EntityType="QSModel1.Summary_tbl" />
+          <AssociationSet Name="FK_Summary_Triggers_tbl" Association="QSModel1.FK_Summary_Triggers_tbl">
+            <End Role="Triggers_tbl" EntitySet="Triggers_tbl" />
+            <End Role="Summary_tbl" EntitySet="Summary_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Answers_tbl_Triggers_tbl">
+          <End Type="QSModel1.Triggers_tbl" Role="Triggers_tbl" Multiplicity="1" />
+          <End Type="QSModel1.Answers_tbl" Role="Answers_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Triggers_tbl">
+              <PropertyRef Name="TriggerID" />
+            </Principal>
+            <Dependent Role="Answers_tbl">
+              <PropertyRef Name="triggerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answers_tbl_Triggers_tbl1">
+          <End Type="QSModel1.Triggers_tbl" Role="Triggers_tbl" Multiplicity="0..1" />
+          <End Type="QSModel1.Answers_tbl" Role="Answers_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Triggers_tbl">
+              <PropertyRef Name="TriggerID" />
+            </Principal>
+            <Dependent Role="Answers_tbl">
+              <PropertyRef Name="DoneTrigger" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="User_Line">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_num" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Line" Type="Int32" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Summary_tbl">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TrigID" Type="Int64" Nullable="false" />
+          <Property Name="SafetyBefore" Type="Boolean" />
+          <Property Name="SafetyAfter" Type="Boolean" />
+          <Property Name="QualityBefore" Type="Boolean" />
+          <Property Name="QualityAfter" Type="Boolean" />
+          <Property Name="Inserted" Type="DateTime" Precision="3" />
+          <Property Name="LastEdited" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Triggers_tbl" Relationship="QSModel1.FK_Summary_Triggers_tbl" FromRole="Summary_tbl" ToRole="Triggers_tbl" />
+        </EntityType>
+        <Association Name="FK_Summary_Triggers_tbl">
+          <End Type="QSModel1.Triggers_tbl" Role="Triggers_tbl" Multiplicity="1" />
+          <End Type="QSModel1.Summary_tbl" Role="Summary_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Triggers_tbl">
+              <PropertyRef Name="TriggerID" />
+            </Principal>
+            <Dependent Role="Summary_tbl">
+              <PropertyRef Name="TrigID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QSModel1StoreContainer" CdmEntityContainer="QSEntities1">
+          <EntitySetMapping Name="Answers_tbl">
+            <EntityTypeMapping TypeName="QSModel1.Answers_tbl">
+              <MappingFragment StoreEntitySet="Answers_tbl">
+                <ScalarProperty Name="DoneTrigger" ColumnName="DoneTrigger" />
+                <ScalarProperty Name="A_ID" ColumnName="A_ID" />
+                <ScalarProperty Name="q_ID" ColumnName="q_ID" />
+                <ScalarProperty Name="states" ColumnName="states" />
+                <ScalarProperty Name="action" ColumnName="action" />
+                <ScalarProperty Name="done" ColumnName="done" />
+                <ScalarProperty Name="triggerID" ColumnName="triggerID" />
+                <ScalarProperty Name="TableType" ColumnName="TableType" />
+                <ScalarProperty Name="DoneDate" ColumnName="DoneDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions_tbl">
+            <EntityTypeMapping TypeName="QSModel1.Questions_tbl">
+              <MappingFragment StoreEntitySet="Questions_tbl">
+                <ScalarProperty Name="Q_ID" ColumnName="Q_ID" />
+                <ScalarProperty Name="question" ColumnName="question" />
+                <ScalarProperty Name="AnsType" ColumnName="AnsType" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="TableType" ColumnName="TableType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QSModel1.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Triggers_tbl">
+            <EntityTypeMapping TypeName="QSModel1.Triggers_tbl">
+              <MappingFragment StoreEntitySet="Triggers_tbl">
+                <ScalarProperty Name="TriggerID" ColumnName="TriggerID" />
+                <ScalarProperty Name="line" ColumnName="line" />
+                <ScalarProperty Name="shift" ColumnName="shift" />
+                <ScalarProperty Name="daydate" ColumnName="daydate" />
+                <ScalarProperty Name="usernum" ColumnName="usernum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Line">
+            <EntityTypeMapping TypeName="QSModel1.User_Line">
+              <MappingFragment StoreEntitySet="User_Line">
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="User_num" ColumnName="User_num" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Summary_tbl">
+            <EntityTypeMapping TypeName="QSModel1.Summary_tbl">
+              <MappingFragment StoreEntitySet="Summary_tbl">
+                <ScalarProperty Name="LastEdited" ColumnName="LastEdited" />
+                <ScalarProperty Name="Inserted" ColumnName="Inserted" />
+                <ScalarProperty Name="QualityAfter" ColumnName="QualityAfter" />
+                <ScalarProperty Name="QualityBefore" ColumnName="QualityBefore" />
+                <ScalarProperty Name="SafetyAfter" ColumnName="SafetyAfter" />
+                <ScalarProperty Name="SafetyBefore" ColumnName="SafetyBefore" />
+                <ScalarProperty Name="TrigID" ColumnName="TrigID" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

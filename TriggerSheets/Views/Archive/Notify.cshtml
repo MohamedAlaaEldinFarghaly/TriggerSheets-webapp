@@ -1,0 +1,63 @@
+﻿@model IEnumerable<TriggerSheets.Models.Summary_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Late form fill</h2>
+
+@*@using (Html.BeginForm("Excelpost", "Archive", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" value="Export To Excel Sheet" class="btn btn-default" />
+}*@
+
+@*<p>
+    <br />
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Inserted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastEdited)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Triggers_tbl.shift)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Triggers_tbl.line)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+          int hour = item.Inserted.Value.Hour;
+          int min = item.Inserted.Value.Minute;
+          if ((hour == 15 || hour == 23 || hour ==7) && (min <=30))
+          {
+
+          }
+          else { 
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Inserted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastEdited)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Triggers_tbl.shift)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Triggers_tbl.line)
+            </td>
+        </tr>
+        }
+        
+    }
+
+</table>

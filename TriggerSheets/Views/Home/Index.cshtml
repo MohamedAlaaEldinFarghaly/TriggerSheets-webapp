@@ -1,0 +1,90 @@
+﻿@model TriggerSheets.Models.User_Line
+
+@{
+    ViewBag.Title = "Home Page";
+}
+<br />
+
+@*<br />
+<div>
+    @Html.ActionLink("Log in as Operator", "Create", "Operator")
+    <br />
+    @Html.ActionLink("Log in as Manager", "Index", "Line")
+    <br />
+    @Html.ActionLink("Log in as Admin", "Index", "Safety")
+    <br />
+    @Html.ActionLink("Log in as Admin", "Index", "Quality")
+    <br />
+    @Html.ActionLink("Admin of users", "Index", "Users")
+</div>*@
+
+
+
+
+<h1> @ViewBag.Message </h1>
+
+
+
+@if (Model != null)
+{
+<body>
+    <div>
+        <h4>Your User Data</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Username
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.User_num)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Line)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Line)
+            </dd>
+
+        </dl>
+    </div>
+
+</body>
+
+<div>
+    <br />
+    @if (Model.Type == "Admin")
+    {
+        @Html.ActionLink("Edit Users", "Index", "Users")
+        <br />
+        @Html.ActionLink("Edit Safety Questions", "Index", "Safety")
+        <br />
+        @Html.ActionLink("Edit Quality Questions", "Index", "Quality")
+        
+    }
+    else if (Model.Type =="Manager")
+    {
+        @Html.ActionLink("Proceed to one day management", "Index", "Line")
+        <br />
+        @Html.ActionLink("Proceed to Archive (Multiple Days)", "Choose", "Archive")
+        
+    }
+    else
+    {
+        @Html.ActionLink("Proceed to Operator Home", "Create", "Operator")
+    }
+
+    <br />
+
+</div>
+}

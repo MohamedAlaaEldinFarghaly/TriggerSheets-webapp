@@ -1,0 +1,106 @@
+﻿@model IEnumerable<TriggerSheets.Models.Summary_tbl>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm("Excelpost", "Archive", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <input type="submit" value="Export To Excel Sheet" class="btn btn-default" />
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SafetyBefore)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SafetyAfter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QualityBefore)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.QualityAfter)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Inserted)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastEdited)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Triggers_tbl.shift)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Triggers_tbl.line)
+        </th>
+
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @if (item.SafetyBefore ?? true)
+            {
+                <p style="color: red">HIGH</p>
+            }
+            else
+            {
+                <p style="color: green">LOW</p>
+            }
+        </td>
+        <td>
+            @if (item.SafetyAfter?? true)
+            {
+                <P style="color: red">HIGH</P>
+            }
+            else
+            {
+                <p style ="color: green">LOW</p>
+            }
+        </td>
+        <td>
+            @if (item.QualityBefore ?? true)
+            {
+                <p style="color: red">HIGH</p>
+            }
+            else
+            {
+                <p style="color: green">LOW</p>
+            }
+        </td>
+        <td>
+            @if (item.QualityAfter ?? true)
+            {
+                <p style="color: red">HIGH</p>
+            }
+            else
+            {
+                <p style="color: green">LOW</p>
+            }
+        </td>
+        <td>
+            
+            @Html.DisplayFor(modelItem => item.Inserted)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastEdited)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Triggers_tbl.shift)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Triggers_tbl.line)
+        </td>
+
+    </tr>
+}
+
+</table>
+
+
